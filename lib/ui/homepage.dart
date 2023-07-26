@@ -11,15 +11,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   //Criação de componente de widget a parte , que também pode ser utilizado no futuro
-  void createNewTask() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DialogBox();
-      },
-    );
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +21,9 @@ class _HomePage extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 237, 204, 107),
         title: Center(
-          child: Text(
+          child: const Text(
             "TO DO",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -47,8 +38,8 @@ class _HomePage extends State<HomePage> {
                   },
                 ),
                 title: Text(todo.all_todo.elementAt(index).title.toString()),
-                trailing:
-                    Text(todo.all_todo.elementAt(index).create.toString()),
+                // trailing:
+                //Text(todo.all_todo.elementAt(index).create.toString()),
               );
             },
             separatorBuilder: (_, __) => Divider(),
@@ -56,7 +47,11 @@ class _HomePage extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-          onPressed: createNewTask, child: Icon(Icons.add)),
+          onPressed: () {
+            //Navegação por routa parece mais interresante .
+            Navigator.pushNamed(context, '/addNewTodo');
+          },
+          child: Icon(Icons.add)),
     );
   }
 }
