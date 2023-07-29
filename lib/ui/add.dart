@@ -8,11 +8,30 @@ class AddTodoList extends StatelessWidget {
   //TextEditingController que notifica o valueNotifier
   final titleController = TextEditingController();
   final descritionController = TextEditingController();
+
   late Todo todo;
 
   @override
   Widget build(BuildContext context) {
+    //Este provider apenas consegue mostrar os dados porque as funções que ele chama , tem listerns
     final todoprovider = Provider.of<TodoList>(context);
+
+    void gerar() {
+      if (titleController.text != "" && descritionController.text != "") {
+        todo = Todo(
+            title: titleController.text, create: descritionController.text);
+
+        todoprovider.addNewTodo(todo);
+
+        titleController.text = "";
+        descritionController.text = "";
+        Navigator.pop(context, '/');
+      } else {
+        Fluttertoast.showToast(
+            msg: "Empaty value", toastLength: Toast.LENGTH_LONG, fontSize: 16);
+      }
+    }
+
     // TODO: implement build
     return Scaffold(
         backgroundColor: Colors.amber,
@@ -67,22 +86,7 @@ class AddTodoList extends StatelessWidget {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          if (titleController.text != "" &&
-                              descritionController.text != "") {
-                            todo = Todo(
-                                title: titleController.text,
-                                create: descritionController.text);
-
-                            todoprovider.addNewTodo(todo);
-
-                            titleController.text = "";
-                            descritionController.text = "";
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Empaty value",
-                                toastLength: Toast.LENGTH_LONG,
-                                fontSize: 16);
-                          }
+                          gerar();
                         },
                         child: const Text("Guardar"))
                   ],
