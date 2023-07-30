@@ -5,7 +5,6 @@ class TodoList extends ChangeNotifier {
   List<Todo> all_todo = [];
   List<Todo> finished = [];
 
-
   void addNewTodo(Todo todo) {
     all_todo.add(todo);
     notifyListeners();
@@ -25,8 +24,13 @@ class TodoList extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTodo(Todo todo) {
-    all_todo.remove(todo);
+  void removeAllTodo() {
+    all_todo = [];
+    notifyListeners();
+  }
+
+  void deleteTodo(int index) {
+    all_todo.removeAt(index);
     notifyListeners();
   }
 }

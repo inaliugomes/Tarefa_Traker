@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tarefa_traker/repository/Todo_List.dart';
+import 'package:tarefa_traker/ui/detalhe.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -53,12 +54,6 @@ class _HomePage extends State<HomePage> {
                   setState(() {});
                 },
                 icon: Icon(Icons.radio_button_unchecked)),
-            IconButton(
-                onPressed: () {
-                  todo.finished.removeRange(0, todo.finished.length);
-                  setState(() {});
-                },
-                icon: Icon(Icons.delete)),
           ],
         );
       }
@@ -76,7 +71,10 @@ class _HomePage extends State<HomePage> {
                 leading: Checkbox(
                   value: todo.all_todo.elementAt(index).finish,
                   onChanged: (value) {
-                    // todo.all_todo.elementAt(index).finish = false;
+                    setState(() {
+                      todo.all_todo.elementAt(index).finish = value;
+                      print(todo.all_todo.elementAt(index).finish);
+                    });
                   },
                 ),
                 title: Text(
@@ -92,6 +90,18 @@ class _HomePage extends State<HomePage> {
                     todo.finished.add(todo.all_todo[index]);
                   }
                   setState(() {});
+                },
+                trailing: IconButton(
+                    onPressed: () {
+                      todo.deleteTodo(index);
+                    },
+                    icon: Icon(Icons.delete)),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Detalhe(index: index),
+                    ),
+                  );
                 },
                 // trailing:
                 //Text(todo.all_todo.elementAt(index).create.toString()),
